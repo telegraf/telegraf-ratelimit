@@ -35,7 +35,7 @@
     "debug": "^2.2.0"
   },
   "peerDependencies": {
-    "telegraf": "^2.0.0"
+    "telegraf": "^2.0.0 || ^3.0.0"
   },
   "devDependencies": {
     "eslint": "^2.10.2",
