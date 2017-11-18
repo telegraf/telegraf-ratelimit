@@ -16,19 +16,17 @@ $ npm install telegraf-ratelimit
   
 ```js
 const Telegraf = require('telegraf')
-const RateLimit = require('telegraf-ratelimit')
-
-const telegraf = new Telegraf(process.env.BOT_TOKEN)
+const rateLimit = require('telegraf-ratelimit')
 
 // Set limit to 1 message per 3 seconds
-const limiter = new RateLimit({
+const limitConfig = {
   window: 3000,
   limit: 1,
   onLimitExceeded: (ctx, next) => ctx.reply('Rate limit exceeded')
-})
-
-telegraf.use(limiter.middleware())
-telegraf.on('text', (ctx) => ctx.reply('Hey'))
+}
+const telegraf = new Telegraf(process.env.BOT_TOKEN)
+telegraf.use(rateLimit(limitConfig))
+telegraf.on('text', (ctx) => ctx.reply('Hello!'))
 telegraf.startPolling()
 
 ```
