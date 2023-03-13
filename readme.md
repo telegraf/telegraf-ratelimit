@@ -12,7 +12,7 @@ Rate-limiting middleware for [Telegraf (Telegram bot framework)](https://github.
 $ npm install telegraf-ratelimit
 ```
 
-## Example
+## Example for messages
   
 ```js
 const Telegraf = require('telegraf')
@@ -30,6 +30,30 @@ telegraf.on('text', (ctx) => ctx.reply('Hello!'))
 telegraf.startPolling()
 
 ```
+## Example for Buttons
+
+```js
+const Telegraf = require('telegraf')
+const rateLimit = require('telegraf-ratelimit')
+
+const buttonsLimit = {
+    window: 1000,
+    limit: 1,
+    onLimitExceeded: (ctx, next) => {
+      if ('callback_query' in ctx.update)
+      ctx.answerCbQuery("🔐 You've pressed Buttons too often, Wait......", true)
+    },
+    keyGenerator: (ctx) => {
+      return ctx.callbackQuery ? true : false
+    }
+  }
+  bot.use(rateLimit(buttonsLimit))
+
+```
+
+
+
+
 
 ## API
 
