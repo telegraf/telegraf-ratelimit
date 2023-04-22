@@ -1,5 +1,6 @@
-const Telegraf = require('telegraf')
-const rateLimit = require('../lib/rate-limit')
+import { Telegraf } from 'telegraf'
+import { message } from 'telegraf/filters';
+import { rateLimit } from '../../src/rate-limit';
 
 // Set limit to 1 message per 3 seconds per chat per user
 const config = {
@@ -18,8 +19,12 @@ const stickerLimitConfig = {
   onLimitExceeded: (ctx, next) => ctx.reply('Sticker rate limit exceeded')
 }
 
+if (process.env.BOT_TOKEN === undefined) {
+	throw new TypeError("BOT_TOKEN must be provided!");
+}
+
 const telegraf = new Telegraf(process.env.BOT_TOKEN)
 telegraf.use(rateLimit(config))
-telegraf.on('sticker', rateLimit(stickerLimitConfig), (ctx) => ctx.reply('Nice sticker'))
-telegraf.on('text', (ctx) => ctx.reply('Hey'))
-telegraf.startPolling()
+telegraf.on(message('sticker'), rateLimit(stickerLimitConfig), (ctx) => ctx.reply('Nice sticker'))
+telegraf.on(message('text'), (ctx) => ctx.reply('Hey'))
+telegraf.launch()

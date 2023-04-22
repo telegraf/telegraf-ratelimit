@@ -7,37 +7,58 @@
     "type": "git",
     "url": "git+ssh://git@github.com/telegraf/telegraf-ratelimit.git"
   },
-  "keywords": [
-    "telegram",
-    "telegraf",
-    "rate limit",
-    "middleware"
-  ],
   "author": "Vitaly Domnikov <dotcypress@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/telegraf/telegraf-ratelimit/issues"
   },
-  "homepage": "https://github.com/telegraf/telegraf-ratelimit#readme",
-  "engines": {
-    "node": ">=6.2.1"
+  "homepage": "https://github.com/telegraf/telegraf-ratelimit",
+  "exports": {
+    ".": {
+      "types": "./typings/rate-limit.d.ts",
+      "default": "./lib/rate-limit.js"
+    }
   },
   "files": [
-    "lib/rate-limit.js",
-    "lib/memory-store.js"
+    "src/**/*.ts",
+    "lib/**/*.js",
+    "typings/**/*.d.ts",
+    "typings/**/*.d.ts.map"
   ],
   "scripts": {
-    "test": "eslint ."
+    "prepare": "npm run --silent build",
+    "build": "tsc",
+    "pretest": "npm run build",
+    "lint": "eslint ."
+  },
+  "type": "commonjs",
+  "engines": {
+    "node": "^12.20.0 || >=14.13.1"
   },
   "dependencies": {
-    "debug": "^3.1.0"
+    "debug": "^4.3.4"
+  },
+  "peerDependencies": {
+    "telegraf": "^4.12.2"
   },
   "devDependencies": {
-    "eslint": "^4.1.1",
-    "eslint-config-standard": "^10.2.0",
-    "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-node": "^5.1.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1"
-  }
+    "@types/debug": "^4.1.7",
+    "@types/node": "^18.15.13",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^2.8.7",
+    "typescript": "^5.0.4"
+  },
+  "keywords": [
+    "telegram",
+    "telegraf",
+    "rate limit",
+    "middleware"
+  ]
 }
