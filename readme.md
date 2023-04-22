@@ -15,8 +15,9 @@ $ npm install telegraf-ratelimit
 ## Example
   
 ```js
-const Telegraf = require('telegraf')
-const rateLimit = require('telegraf-ratelimit')
+const { Telegraf } = require('telegraf');
+const { message } = require('telegraf/filters');
+const { rateLimit } = require('telegraf-ratelimit');
 
 // Set limit to 1 message per 3 seconds
 const limitConfig = {
@@ -26,8 +27,8 @@ const limitConfig = {
 }
 const telegraf = new Telegraf(process.env.BOT_TOKEN)
 telegraf.use(rateLimit(limitConfig))
-telegraf.on('text', (ctx) => ctx.reply('Hello!'))
-telegraf.startPolling()
+telegraf.on(message('text'), (ctx) => ctx.reply('Hello!'))
+telegraf.launch()
 
 ```
 
@@ -44,6 +45,11 @@ Default implementation of `keyGenerator`:
 
 ```js
 function keyGenerator(ctx) {
-  return ctx.from.id
+  const fromId = ctx.from?.id
+  const chatId = ctx.chat?.id
+  if (fromId == null || chatId == null) {
+    return undefined
+  }
+  return `${fromId}:${chatId}`
 }
 ```

@@ -20,6 +20,10 @@ coverage
 # node-waf configuration
 .lock-wscript
 
+# lock scripts
+pnpm-lock.yaml
+yarn.lock
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
@@ -31,3 +35,12 @@ node_modules
 
 # Optional REPL history
 .node_repl_history
+.env
+.vscode
+/lib
+/docs/build
+/typings/
+tsconfig.tsbuildinfo
+
+# Linting cache
+.eslintcache
